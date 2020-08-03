@@ -1,30 +1,28 @@
-import React from 'react'
-import { View, Text, Dimensions, TextInput, Button, TouchableOpacity } from 'react-native'
-import TaskItem from './TaskItem'
-
-export interface ITask {
-  name: string
-  time: number
-}
+import React from 'react';
+import {View, Dimensions, TextInput, Button} from 'react-native';
+import TaskItem from './TaskItem';
+import {ITask} from './redux/modules/tasks/types';
 
 const Tasks = () => {
-  const [tasks, updatedTasksList] = React.useState<ITask[]>([])
+  const [tasks, updatedTasksList] = React.useState<ITask[]>([]);
   const [task, setTask] = React.useState<ITask>({
     name: '',
     time: 0,
-  })
+  });
 
   const onChangeText = (text: string) => {
-    setTask({ name: text, time: 0 })
-  }
+    setTask({name: text, time: 0});
+  };
 
   const createNewTask = () => {
-    updatedTasksList((currentList) => [...currentList, task])
-  }
+    updatedTasksList((currentList) => [...currentList, task]);
+  };
 
   const removeTask = (taskName: string) => {
-    updatedTasksList((currentList) => currentList.filter((elem) => elem.name !== taskName))
-  }
+    updatedTasksList((currentList) =>
+      currentList.filter((elem) => elem.name !== taskName),
+    );
+  };
 
   return (
     <View>
@@ -35,11 +33,10 @@ const Tasks = () => {
           padding: 24,
           justifyContent: 'space-between',
           borderWidth: 2,
-        }}
-      >
+        }}>
         <TextInput
           autoFocus
-          placeholder="Task name"
+          placeholder="Название таска"
           defaultValue=""
           style={{
             padding: 8,
@@ -49,7 +46,7 @@ const Tasks = () => {
           }}
           onChangeText={onChangeText}
         />
-        <Button onPress={createNewTask} title="new task" />
+        <Button onPress={createNewTask} title="новый task" />
       </View>
       <View>
         {tasks.map((elem, key) => (
@@ -57,7 +54,7 @@ const Tasks = () => {
         ))}
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default Tasks
+export default Tasks;

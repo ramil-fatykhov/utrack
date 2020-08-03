@@ -1,22 +1,29 @@
-import React from 'react'
-import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar } from 'react-native'
+import React from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
+import {Provider} from 'react-redux';
 
-import { Header, Colors } from 'react-native/Libraries/NewAppScreen'
-import Tasks from './src/Tasks'
+import Tasks from './src/Tasks';
+import { configurateStore } from './src/redux/store';
 
-declare const global: { HermesInternal: null | {} }
+declare const global: {HermesInternal: null | {}};
 
 const App = () => {
+  (console as any).disableYellowBox = true;
+  const {store} = configurateStore();
   return (
-    <>
+    <Provider store={store}>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <Tasks />
         </ScrollView>
       </SafeAreaView>
-    </>
-  )
-}
+    </Provider>
+  );
+};
 
-export default App
+export default App;
