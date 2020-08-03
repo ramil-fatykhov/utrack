@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, View, Text, Dimensions, TextInput, Button, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Dimensions, TextInput, Button, TouchableOpacity } from 'react-native'
+import TaskItem from './TaskItem'
 
 export interface ITask {
   name: string
@@ -31,7 +32,9 @@ const Tasks = () => {
         style={{
           height: (1 / 4) * Dimensions.get('screen').height,
           width: '100%',
-          padding: 16,
+          padding: 24,
+          justifyContent: 'space-between',
+          borderWidth: 2,
         }}
       >
         <TextInput
@@ -49,48 +52,12 @@ const Tasks = () => {
         <Button onPress={createNewTask} title="new task" />
       </View>
       <View>
-        {tasks.map((elem) => (
-          <View
-            key={elem.name}
-            style={{
-              width: '100%',
-              padding: 16,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <View>
-              <Text>Task: {elem.name}</Text>
-              <Text>Time: {elem.time}</Text>
-            </View>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'red',
-                borderRadius: 40,
-                height: 32,
-                width: 32,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={() => removeTask(elem.name)}
-            >
-              <Text
-                style={{
-                  color: '#fff',
-                }}
-              >
-                X
-              </Text>
-            </TouchableOpacity>
-          </View>
+        {tasks.map((elem, key) => (
+          <TaskItem key={key} elem={elem} />
         ))}
       </View>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  scrollView: {},
-})
 
 export default Tasks
