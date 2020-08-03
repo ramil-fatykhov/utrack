@@ -2,26 +2,26 @@ import React from 'react';
 import {View, Dimensions, TextInput, Button} from 'react-native';
 import TaskItem from './TaskItem';
 import {ITask} from './redux/modules/tasks/types';
+import {useDispatch, useSelector} from 'react-redux';
+import {TasksActions} from './redux/modules/tasks/actions';
+import {IState} from './redux/types/IState';
 
 const Tasks = () => {
-  const [tasks, updatedTasksList] = React.useState<ITask[]>([]);
+  const {tasks} = useSelector((state: IState) => state.tasks);
   const [task, setTask] = React.useState<ITask>({
     name: '',
     time: 0,
+    isStarted: false,
   });
 
+  const dispatch = useDispatch();
+
   const onChangeText = (text: string) => {
-    setTask({name: text, time: 0});
+    setTask({name: text, time: 0, isStarted: false});
   };
 
   const createNewTask = () => {
-    updatedTasksList((currentList) => [...currentList, task]);
-  };
-
-  const removeTask = (taskName: string) => {
-    updatedTasksList((currentList) =>
-      currentList.filter((elem) => elem.name !== taskName),
-    );
+    dispatch(TasksActions.addTask(task));
   };
 
   return (
@@ -36,7 +36,7 @@ const Tasks = () => {
         }}>
         <TextInput
           autoFocus
-          placeholder="Название таска"
+          placeholder="Task Name"
           defaultValue=""
           style={{
             padding: 8,
@@ -46,11 +46,11 @@ const Tasks = () => {
           }}
           onChangeText={onChangeText}
         />
-        <Button onPress={createNewTask} title="новый task" />
+        <Button onPress={createNewTask} title="New Task" />
       </View>
       <View>
         {tasks.map((elem, key) => (
-          <TaskItem key={key} elem={elem} />
+          <TaskItem key={key} task={elem} />
         ))}
       </View>
     </View>

@@ -9,8 +9,6 @@ import {Provider} from 'react-redux';
 import Tasks from './src/Tasks';
 import { configurateStore } from './src/redux/store';
 
-declare const global: {HermesInternal: null | {}};
-
 const App = () => {
   (console as any).disableYellowBox = true;
   const {store} = configurateStore();
